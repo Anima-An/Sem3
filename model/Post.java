@@ -51,7 +51,7 @@ public class Post {
 
     public Post() {
         setTitle("Test Title");
-        setTitle("Test Description");
+        setMsg("Test Description");
     }
 
     public Post(String title, String msg) {
@@ -60,6 +60,12 @@ public class Post {
     }
 
     //4.toString
+
+    public String toString() {
+        return title + "(" + dateTime +")" + msg + "[" + countOfLikes + "]";
+    }
+
+    //
     
 
 }
