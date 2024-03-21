@@ -3,6 +3,7 @@ package model.user;
 import java.util.ArrayList;
 
 import model.Page;
+import model.Post;
 import model.PostType;
 
 public class BusinessUser extends RegisteredUser {
@@ -61,11 +62,47 @@ public class BusinessUser extends RegisteredUser {
 
     //5. other funtions
 
-    @Override
-    public void publishPost(String title, String msg, PostType type) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'publishPost'");
+    public void addPage(String title, String description) throws Exception {
+        //TODO ja nepieciesams, parbauda ievades parametrus uz not null
+        
+        for(Page tempP: allUserPages) {
+            if(tempP.getTitle().toLowerCase().equals(title.toLowerCase())) {
+                throw new Exception("Page already exists");
+            }
+        }
+
+        Page newPage = new Page(title, description);
+        allUserPages.add(newPage);
     }
 
-   
+
+    public void publicPostInPage(String postTitle, String msg, String pageTitle, PostType type) throws  Exception{ 
+        //TODO ja nepieciesams, parbauda ievades parametrus uz not null
+
+        //TODO atrast konkreto lapu un caur publish Post funkciju pieliek lapa sludinajumi
+
+        for(Page tempP : allUserPages) {
+            if(tempP.getTitle().toLowerCase().equals(postTitle.toLowerCase())) {
+                Post newPost = publishPost(postTitle, msg, type);
+                if(type.equals(PostType.privatePost))
+                    tempP.getPrivatePosts().add(newPost);
+                else if(type.equals(PostType.publicPost))
+                    tempP.getPublicPosts().add(newPost);
+                
+                return;
+            }
+
+    }
+
+    throw new Exception("Page not found");
+
 }
+    @Override
+    public Post publishPost(String title, String msg, PostType type) throws Exception {
+        // TODO Auto-generated method stub
+        Post p = new Post(title, msg);
+        return newPost;
+    
+    }
+}  
+

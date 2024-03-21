@@ -59,14 +59,15 @@ public class PrivateUser extends RegisteredUser{
 
 
     @Override
-    public void publishPost(String title, String msg, PostType type) throws Exception {
+    public Post publishPost(String title, String msg, PostType type) throws Exception {
         if(title == null || msg == null || type == null) throw new Exception("Problem with input parameter");
     
             Post newPost = new Post(title, msg);
 
-            if(type.equals(PostType.privatePost)) 
-                privatePosts.add(newPost);
+            if(type.equals(PostType.privatePost)) privatePosts.add(newPost);
             else publicPosts.add(newPost);
+
+            return newPost;
     }
 
     
