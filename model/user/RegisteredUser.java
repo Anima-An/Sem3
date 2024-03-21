@@ -1,5 +1,9 @@
 package model.user;
 
+import java.security.MessageDigest;
+
+import javax.swing.MenuSelectionManager;
+
 import service.IPostService;
 
 public abstract class RegisteredUser extends GuestUser implements IPostService {
@@ -7,7 +11,7 @@ public abstract class RegisteredUser extends GuestUser implements IPostService {
     private String username;
     protected String nameAndSurnameOrTitle;
 
-    //TODO izmanto encodešanu
+
     private String password;
 
     //2. get and set
@@ -30,8 +34,21 @@ public abstract class RegisteredUser extends GuestUser implements IPostService {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String inputPassword) {
+        if(inputPassword != null && inputPassword.matches("[A-Za-z0-9]{4,20}")) {
+            try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(inputPassword.getBytes());
+            this.password = new String(md.digest());
+            }
+            catch (Exception e) {
+                this.password = "admin12345"
+            }
+        else
+        {
+            this.password = "admin12345"
+        }
+        }
     }
 
 
